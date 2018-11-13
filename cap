@@ -1,0 +1,56 @@
+#!/usr/bin/ruby -I./lib
+# encoding: UTF-8
+#
+require 'config.rb'
+require 'task.rb'
+require 'usage.rb'
+
+# First agrument is a role name
+role = ARGV[0]
+usage if role.nil? || role == '-h' || role == '--help'
+
+# Next arguments are a command with options
+command = ARGV.drop(1).join(' ')
+# If no command is given, print the host name
+command = 'hostname' if command.empty?
+
+# Print start time
+start_time = Time.now
+puts start_time
+puts "-" * 42
+
+target = $hosts[role.to_sym]
+# If role is unknown, first argument is a host name
+target = [role] if target.nil? 
+
+print Color::YELLOW
+tasks = []
+# Create tasks
+target.each do |host|
+  begin
+    tasks << Task.new(host, command)
+  rescue ThreadError
+    puts "==> Skip #{host}"
+  end
+end
+
+print Color::DEFAULT
+puts "-" * 42
+print Color::GREEN
+# Wait every task complete
+while Task.running
+  sleep 0.3
+  print "\rElapsed time: #{format("%.1f",(Time.now - start_time))} s   "
+  tasks.each do |tsk|
+    print tsk.progress
+  end
+  print '   '
+end
+puts ' '
+puts "=" * 42
+print Color::DEFAULT
+
+# Print report
+tasks.each do |tsk|
+  print tsk.report
+end
