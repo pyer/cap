@@ -16,6 +16,7 @@ class Task < Thread
     @logs = ''
     @header = ''
     @start_at = Time.now
+    @end_at = 0
     @wip = true
     conf = Net::SSH::Config.for(host)
     user = conf[:user]
@@ -49,6 +50,7 @@ class Task < Thread
     rescue Net::SSH::AuthenticationFailed
       log_error "user #{user} authentication failed"
     end
+    @end_at = Time.now
     @@count -= 1
   end
 
@@ -59,7 +61,7 @@ class Task < Thread
 
   def report
     print Color::YELLOW
-    puts "#{@header}   (Duration: #{format("%.1f",(Time.now - @start_at))} s)"
+    puts "#{@header}   (Duration: #{format("%.1f",(@end_at - @start_at))} s)"
     print Color::DEFAULT
     puts @logs
   end
