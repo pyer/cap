@@ -5,9 +5,9 @@ require 'config.rb'
 require 'task.rb'
 require 'usage.rb'
 
-# First agrument is a role name
-role = ARGV[0]
-usage if role.nil? || role == '-h' || role == '--help'
+# First agrument is a group or a host name
+group = ARGV[0]
+usage if group.nil? || group == '-h' || group == '--help'
 
 # Next arguments are a command with options
 command = ARGV.drop(1).join(' ')
@@ -19,9 +19,9 @@ start_time = Time.now
 puts start_time
 puts "-" * 42
 
-target = $hosts[role.to_sym]
-# If role is unknown, first argument is a host name
-target = [role] if target.nil? 
+target = $hosts[group.to_sym]
+# If group is unknown, first argument is a host name
+target = [group] if target.nil? 
 
 print Color::YELLOW
 tasks = []

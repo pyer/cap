@@ -4,20 +4,18 @@ My cap is not Capistrano, but a multi threaded ssh handler
 
 ## Usage
 
-Usage: ./cap role command
+Usage: ./cap group|host command
 
-  role is defined in './config/nodes'
+  groups and hosts are defined in './config/nodes'
 
-  role can be a single hostname
-
-  command is launched on hosts owning the role
+  command is launched on hosts belonging to the group
 
   default command is hostname
 
 
 ## Examples
 
-Listing of hosts belonging to 'archives' role
+Listing of hosts belonging to 'archives' group
 
 ```
 ./cap archives
@@ -38,7 +36,7 @@ archive2
 Cleaning some files
 
 ```
-./cap archives rm /tmp/*.txt
+./cap archives "rm /tmp/*.txt"
 2018-11-13 18:01:56 +0100
 ------------------------------------------
 ==> ssh pyer@archive1 rm /tmp/*.txt
@@ -55,6 +53,6 @@ rm: cannot remove '/tmp/*.txt': No such file or directory
 
 ## Configuration
 
-Hosts and roles are defined in './config/nodes'
+Hosts and groups are defined in './config/nodes'
 
 SSH parameters are defined in '~/.ssh/config'

@@ -1,20 +1,25 @@
 # nodes
-# A host is defined by its name and a list of roles
-# A role is a list of hosts
+# A host is defined by its name and a list of groups it belongs
+# A group is a list of hosts
 
-role :http, 'prod-web1','prod-web2', 'prod-web3','prod-web4'
-role :archives, 'archive1', 'archive2'
+group :http, 'prod-web1','prod-web2', 'qua-web1', 'dev-web2', 'dev-web3'
+group :archives, 'archive1', 'archive2'
 
 # DEV
-host 'dev-web1', :dev_web, :dev1, :dev, :all
-host 'dev-app1', :dev_app, :dev1, :dev, :all
-host 'dev-db1',  :dev_db,  :dev1, :dev, :all
+#host 'dev-web1', :dev_web, :dev1, :dev, :all
+#host 'dev-app1', :dev_app, :dev1, :dev, :all
+#host 'dev-db1',  :dev_db,  :dev1, :dev, :all
 host 'dev-web2', :dev_web, :dev2, :dev, :all
 host 'dev-app2', :dev_app, :dev2, :dev, :all
 host 'dev-db2',  :dev_db,  :dev2, :dev, :all
 host 'dev-web3', :dev_web, :dev3, :dev, :all
 host 'dev-app3', :dev_app, :dev3, :dev, :all
 host 'dev-db3',  :dev_db,  :dev3, :dev, :all
+
+# QUA
+host 'qua-web1', :qua1, :qua, :all
+host 'qua-app1', :qua1, :qua, :all
+host 'qua-db1',  :qua1, :qua, :all
 
 # PROD
 host 'prod-web1', :prod_web, :prod1, :prod, :all
